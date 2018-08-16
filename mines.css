@@ -1,0 +1,36 @@
+﻿button {
+    height: 50px;
+    width: 50px;
+    vertical-align: text-bottom;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+}
+
+.sc1 {
+    color: black;
+}
+.sc2 {
+    color: blue;
+}
+.sc3 {
+    color: green;
+}
+.sc4 {
+    color: cyan;
+}
+.sc5 {
+    color: red;
+}
+.sc6 {
+    color: magenta;
+}
+.sc7 {
+    color: brown;
+}
+.sc8 {
+    color: lightgray;
+}

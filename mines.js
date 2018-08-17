@@ -12,7 +12,7 @@
         }
         fieldData[i] = fieldLine;
     }
-    let minesCount = 10;
+    let minesCount = 1;
     let minesMined = 0;
     while (minesMined < minesCount) {
         let tmpI = Math.floor(Math.random() * fieldHeight);

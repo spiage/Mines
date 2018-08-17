@@ -2,8 +2,8 @@
     let minesScript = document.getElementById("minesScript");
     let mainDiv = document.createElement("div");
     document.body.insertBefore(mainDiv, minesScript);
-    let fieldWidth = 30;
-    let fieldHeight = 20;
+    let fieldWidth = 10;
+    let fieldHeight = 10;
     let fieldData = new Array();
     for (var i = 0; i < fieldHeight; i++) {
         let fieldLine = new Array();
@@ -12,7 +12,7 @@
         }
         fieldData[i] = fieldLine;
     }
-    let minesCount = 100;
+    let minesCount = 10;
     let minesMined = 0;
     while (minesMined < minesCount) {
         let tmpI = Math.floor(Math.random() * fieldHeight);

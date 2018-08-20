@@ -1,4 +1,7 @@
-﻿button {
+﻿span {
+    font-size: 2em;
+}
+button {
     height: 50px;
     width: 50px;
     vertical-align: text-bottom;
@@ -33,4 +36,12 @@ p {
 }
 .sc8 {
     color: lightgray;
+}
+
+img {
+    background: url("boom.png");
+    background-size: 35px;
+    background-repeat: no-repeat;
+    width: 35px;
+    height: 35px;
 }

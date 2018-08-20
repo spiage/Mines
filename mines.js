@@ -1,7 +1,45 @@
 ﻿(function () {
     let minesScript = document.getElementById("minesScript");
     let mainDiv = document.createElement("div");
+    mainDiv.id = "mainDiv";
     document.body.insertBefore(mainDiv, minesScript);
+    let minesPercent = document.getElementById("minesPercent");
+    minesPercent.value = 10;
+    minesPercent.addEventListener("change", function () { GenerateField(); });
+    GenerateField();
+}());
+
+function CheckBoom(btnClicked) {
+    if (!btnClicked.disabled) {
+        let v = parseInt(btnClicked.value);
+        btnClicked.disabled = true;
+        if (9 == v) {
+            btnClicked.innerHTML = "<img />";
+        }
+        else {
+            /*TODO: change later by using Template literals + Babel (IE11 does not support it directly) */
+            btnClicked.innerHTML = "<span class=\"sc" + v + "\">" + v + "</span>";
+            let arr = btnClicked.id.split("_");
+            let a = parseInt(arr[1]);
+            let b = parseInt(arr[2]);
+            if (0 == btnClicked.value) {
+                function getButtonAround(a, b) { return document.getElementById("btn_" + a + "_" + b); }
+                let btn = getButtonAround(a - 1, b - 1); if (btn) { CheckBoom(btn); }
+                btn = getButtonAround(a - 1, b); if (btn) { CheckBoom(btn); }
+                btn = getButtonAround(a - 1, b + 1); if (btn) { CheckBoom(btn); }
+                btn = getButtonAround(a, b - 1); if (btn) { CheckBoom(btn); }
+                btn = getButtonAround(a, b + 1); if (btn) { CheckBoom(btn); }
+                btn = getButtonAround(a + 1, b - 1); if (btn) { CheckBoom(btn); }
+                btn = getButtonAround(a + 1, b); if (btn) { CheckBoom(btn); }
+                btn = getButtonAround(a + 1, b + 1); if (btn) { CheckBoom(btn); }
+            }
+        }
+    }
+}
+
+function GenerateField() {
+    let mainDiv = document.getElementById("mainDiv");
+    mainDiv.innerHTML = "";
     let fieldWidth = 10;
     let fieldHeight = 10;
     let fieldData = new Array();
@@ -12,7 +50,9 @@
         }
         fieldData[i] = fieldLine;
     }
-    let minesCount = 1;
+    let minesPercent = document.getElementById("minesPercent");
+    let mp = parseInt(minesPercent.value);
+    let minesCount = Math.round(fieldHeight * fieldWidth * (mp / 100));
     let minesMined = 0;
     while (minesMined < minesCount) {
         let tmpI = Math.floor(Math.random() * fieldHeight);
@@ -52,33 +92,7 @@
                 minesAround += getMineAround(i + 1, j + 1);
                 btn.value = minesAround;
             }
-            btn.addEventListener("click", function () { CheckBoom(btn); })
+            btn.addEventListener("click", function () { CheckBoom(btn); });
         }
     }
-    function CheckBoom(btnClicked) {
-        if (!btnClicked.disabled) {
-            let v = parseInt(btnClicked.value);
-            btnClicked.disabled = true;
-            if (9 == v) {
-                btnClicked.innerHTML = "<img src=\"boom.png\" height=\"35px\" width=\"35px\" />";
-            }
-            else {
-                btnClicked.innerHTML = "<span class=\"sc" + v + "\">" + v + "</span>";
-                let arr = btnClicked.id.split("_");
-                let a = parseInt(arr[1]);
-                let b = parseInt(arr[2]);
-                if (0 == btnClicked.value) {
-                    function getButtonAround(a, b) { return document.getElementById("btn_" + a + "_" + b); }
-                    let btn = getButtonAround(a - 1, b - 1); if (btn) { CheckBoom(btn); }
-                    btn = getButtonAround(a - 1, b); if (btn) { CheckBoom(btn); }
-                    btn = getButtonAround(a - 1, b + 1); if (btn) { CheckBoom(btn); }
-                    btn = getButtonAround(a, b - 1); if (btn) { CheckBoom(btn); }
-                    btn = getButtonAround(a, b + 1); if (btn) { CheckBoom(btn); }
-                    btn = getButtonAround(a + 1, b - 1); if (btn) { CheckBoom(btn); }
-                    btn = getButtonAround(a + 1, b); if (btn) { CheckBoom(btn); }
-                    btn = getButtonAround(a + 1, b + 1); if (btn) { CheckBoom(btn); }
-                }
-            }
-        }
-    }
-}());
+}

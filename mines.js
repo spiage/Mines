@@ -1,5 +1,4 @@
 ﻿(function () {
-    'esversion: 6';
     let minesScript = document.getElementById("minesScript");
     let mainDiv = document.createElement("div");
     mainDiv.id = "mainDiv";
@@ -9,7 +8,7 @@
     minesPercent.addEventListener("change", function () { GenerateField(); });
     GenerateField();
 }());
-
+function getButtonAround(a, b) { return document.getElementById("btn_" + a + "_" + b); }
 function CheckBoom(btnClicked) {
     if (!btnClicked.disabled) {
         let v = parseInt(btnClicked.value);
@@ -24,7 +23,6 @@ function CheckBoom(btnClicked) {
             let a = parseInt(arr[1]);
             let b = parseInt(arr[2]);
             if (0 == btnClicked.value) {
-                function getButtonAround(a, b) { return document.getElementById("btn_" + a + "_" + b); }
                 let btn = getButtonAround(a - 1, b - 1); if (btn) { CheckBoom(btn); }
                 btn = getButtonAround(a - 1, b); if (btn) { CheckBoom(btn); }
                 btn = getButtonAround(a - 1, b + 1); if (btn) { CheckBoom(btn); }
@@ -37,16 +35,23 @@ function CheckBoom(btnClicked) {
         }
     }
 }
-
+function getMineAround(a, b) {
+    try {
+        return (isNaN(fieldData[a][b])) ? 0 : fieldData[a][b];
+    }
+    catch (e) {
+        return 0;
+    }
+}
 function GenerateField() {
     let mainDiv = document.getElementById("mainDiv");
     mainDiv.innerHTML = "";
     let fieldWidth = 10;
     let fieldHeight = 10;
-    let fieldData = new Array();
-    for (var i = 0; i < fieldHeight; i++) {
-        let fieldLine = new Array();
-        for (var j = 0; j < fieldWidth; j++) {
+    let fieldData = [];
+    for (let i = 0; i < fieldHeight; i++) {
+        let fieldLine = [];
+        for (let j = 0; j < fieldWidth; j++) {
             fieldLine[j] = 0;
         }
         fieldData[i] = fieldLine;
@@ -63,26 +68,19 @@ function GenerateField() {
             minesMined++;
         }
     }
-    for (var i = 0; i < fieldHeight; i++) {
+    for (let i = 0; i < fieldHeight; i++) {
         let p = document.createElement("p");
         mainDiv.appendChild(p);
-        for (var j = 0; j < fieldWidth; j++) {
+        for (let j = 0; j < fieldWidth; j++) {
             let btn = document.createElement("button");
             p.appendChild(btn);
-            btn.id = "btn_" + i + "_" + j;
+            let btnId = "btn_" + i + "_" + j;
+            btn.id = btnId;
             if (1 == fieldData[i][j]) {
                 btn.value = 9;
             }
             else {
                 let minesAround = 0;
-                function getMineAround(a, b) {
-                    try {
-                        return (isNaN(fieldData[a][b])) ? 0 : fieldData[a][b];
-                    }
-                    catch (e) {
-                        return 0;
-                    }
-                }
                 minesAround += getMineAround(i - 1, j - 1);
                 minesAround += getMineAround(i - 1, j);
                 minesAround += getMineAround(i - 1, j + 1);

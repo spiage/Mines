@@ -1,4 +1,5 @@
 ﻿(function () {
+    'esversion: 6';
     let minesScript = document.getElementById("minesScript");
     let mainDiv = document.createElement("div");
     mainDiv.id = "mainDiv";

@@ -5,6 +5,7 @@ button {
     height: 50px;
     width: 50px;
     vertical-align: text-bottom;
+    white-space: nowrap;
 }
 
 p {
